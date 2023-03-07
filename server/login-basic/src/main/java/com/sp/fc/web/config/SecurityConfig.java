@@ -18,18 +18,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(request->{
                     request
+                            //메인 페이지 뚫어놓기
                             .antMatchers("/").permitAll()
                             .anyRequest().authenticated()
                             ;
                 })
                 .formLogin(
+                        //로그인 페이지 뚫어놓기
                         login->login.loginPage("/login")
                                 .permitAll()
+                                //로그인 후 반환 페이지
+                                .defaultSuccessUrl("/", false)
                 )
                 ;
     }
@@ -37,8 +42,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception{
         web.ignoring()
                 .requestMatchers(
+                        //정적 파일 뚫어놓기
                         PathRequest.toStaticResources().atCommonLocations()
                 )
         ;
+    }
+
+    //임시 회원 등록
+    //개발 단계에서만 사용하자
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser(
+                        User.withDefaultPasswordEncoder()
+                                .username("user1")
+                                .password("1111")
+                                .roles("USER")
+                ).withUser(
+                        User.withDefaultPasswordEncoder()
+                                .username("admin")
+                                .password("2222")
+                                .roles("ADMIN")
+                );
+
     }
 }
