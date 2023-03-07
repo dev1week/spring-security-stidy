@@ -34,8 +34,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         login->login.loginPage("/login")
                                 .permitAll()
                                 //로그인 후 반환 페이지
+                                //alwaysUse를 거짓 처리 해놓아야한다.
                                 .defaultSuccessUrl("/", false)
+                                //로그인 실패 후 반환 페이지
+                                .failureUrl("/login-error")
                 )
+                //로그아웃 후 반환 페이지
+                .logout(logout -> logout.logoutSuccessUrl("/"))
                 ;
     }
     @Override
