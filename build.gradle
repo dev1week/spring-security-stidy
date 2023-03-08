@@ -31,14 +31,14 @@ subprojects {
     }
 
     configurations {
-//        developmentOnly
+        developmentOnly
         runtimeClasspath {
             extendsFrom developmentOnly
         }
     }
 
     dependencies {
-//        developmentOnly("$boot:spring-boot-devtools")
+        developmentOnly("$boot:spring-boot-devtools")
         implementation "$boot:spring-boot-starter-security"
         implementation 'com.fasterxml.jackson.core:jackson-annotations'
 
@@ -55,3 +55,26 @@ subprojects {
     }
 
 }
+
+
+["comp", "web"].each {
+    def subProjectDir = new File(projectDir, it)
+    subProjectDir.eachDir {dir->
+        def projectName = ":${it}-${dir.name}"
+        project(projectName){
+            bootJar.enabled(false)
+            jar.enabled(true)
+        }
+    }
+}
+["server"].each {
+    def subProjectDir = new File(projectDir, it)
+    subProjectDir.eachDir {dir->
+        def projectName = ":${it}-${dir.name}"
+        project(projectName){
+
+        }
+    }
+}
+
+help.enabled(false)
