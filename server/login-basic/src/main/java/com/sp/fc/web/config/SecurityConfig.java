@@ -44,6 +44,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling(exception->exception.accessDeniedPage("/access-denied"));
 
     }
+
+    @Bean
+    RoleHierarchy roleHierarchy(){
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
+        return roleHierarchy;
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception{
         web.ignoring()
