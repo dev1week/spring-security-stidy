@@ -2,11 +2,14 @@ package com.sp.fc.web.controller;
 
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+//@PreAuthorize설정
+@EnableGlobalMethodSecurity(prePostEnabled= true)
 public class HomeController {
 
     @GetMapping("/")
