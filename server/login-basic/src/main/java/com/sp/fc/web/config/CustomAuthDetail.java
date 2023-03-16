@@ -7,18 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @Component
-public class CustomAuthDetails implements AuthenticationDetailsSource<HttpServletRequest, RequestInfo> {
-
-
-
-
+public class CustomAuthDetail implements AuthenticationDetailsSource<HttpServletRequest, RequestInfo> {
 
     @Override
     public RequestInfo buildDetails(HttpServletRequest request) {
         return RequestInfo.builder()
+                .loginTime(LocalDateTime.now())
                 .remoteIp(request.getRemoteAddr())
                 .sessionId(request.getSession().getId())
-                .loginTime(LocalDateTime.now())
                 .build();
     }
+
 }

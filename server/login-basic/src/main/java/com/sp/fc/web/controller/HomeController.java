@@ -2,7 +2,6 @@ package com.sp.fc.web.controller;
 
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-//@PreAuthorize설정
-@EnableGlobalMethodSecurity(prePostEnabled= true)
 public class HomeController {
 
     @GetMapping("/")
@@ -48,9 +45,11 @@ public class HomeController {
         return "AdminPage";
     }
 
+
     @ResponseBody
     @GetMapping("/auth")
     public Authentication auth(){
         return SecurityContextHolder.getContext().getAuthentication();
     }
+
 }
